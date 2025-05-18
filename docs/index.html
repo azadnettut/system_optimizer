@@ -3,42 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="System Optimizer - ابزاری ساده برای بهینه‌سازی ویندوز با قابلیت پاکسازی، مدیریت استارتاپ و اسکن بدافزار">
+    <meta name="keywords" content="بهینه‌سازی ویندوز, پاکسازی رجیستری, اسکن بدافزار, دیفرگمنت دیسک, System Optimizer">
+    <meta name="author" content="تیم آزادنت">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#f5f5f5">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
     <title>System Optimizer</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&family=Noto+Sans+Arabic:wght@300;700&family=Noto+Sans+SC:wght@300;700&family=Noto+Sans:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Ubuntu', 'Noto Sans', 'Noto Sans Arabic', 'Noto Sans SC', sans-serif;
+            direction: rtl;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        [lang="en"] body, [lang="zh"] body, [lang="ru"] body, [lang="tr"] body {
+            direction: ltr;
+        }
+        [lang="ar"] body {
+            direction: rtl;
+        }
+        :root {
+            --ubuntu-orange: #E95420;
+            --ubuntu-grey: #2C2C2C;
+            --ubuntu-light: #FFFFFF;
+            --shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar {
+            background-color: var(--ubuntu-grey);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        .navbar ul li a {
+            color: var(--ubuntu-light);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        .navbar ul li a:hover {
+            color: var(--ubuntu-orange);
+        }
+        .language-select {
+            padding: 5px;
+            background-color: var(--ubuntu-light);
+            border: none;
+            border-radius: 5px;
+            font-family: 'Ubuntu', sans-serif;
+            cursor: pointer;
+        }
+        header {
+            background-color: var(--ubuntu-orange);
+            color: var(--ubuntu-light);
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: var(--shadow);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: grid;
+            gap: 20px;
+        }
+        section {
+            background-color: var(--ubuntu-light);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        section h2 {
+            color: var(--ubuntu-orange);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--ubuntu-orange);
+            color: var(--ubuntu-light);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #c6451a;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            position: relative;
+            padding-right: 20px;
+        }
+        ul li:before {
+            content: '✔';
+            position: absolute;
+            right: 0;
+            color: var(--ubuntu-orange);
+        }
+        [lang="en"] ul li, [lang="zh"] ul li, [lang="ru"] ul li, [lang="tr"] ul li {
+            padding-right: 0;
+            padding-left: 20px;
+        }
+        [lang="en"] ul li:before, [lang="zh"] ul li:before, [lang="ru"] ul li:before, [lang="tr"] ul li:before {
+            right: auto;
+            left: 0;
+        }
+        footer {
+            background-color: var(--ubuntu-grey);
+            color: var(--ubuntu-light);
+            text-align: center;
+            padding: 15px;
+            margin-top: auto;
+        }
+        footer a {
+            color: var(--ubuntu-orange);
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            header p {
+                font-size: 0.9rem;
+            }
+            section h2 {
+                font-size: 1.5rem;
+            }
+            section {
+                padding: 15px;
+            }
+            .navbar ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="https://azadnettut.github.io/#home" data-lang-fa="خانه" data-lang-en="Home" data-lang-ar="الرئيسية" data-lang-zh="首页" data-lang-ru="Главная" data-lang-tr="Ana Sayfa"><span lang="fa">خانه</span><span lang="en" style="display:none">Home</span><span lang="ar" style="display:none">الرئيسية</span><span lang="zh" style="display:none">首页</span><span lang="ru" style="display:none">Главная</span><span lang="tr" style="display:none">Ana Sayfa</span></a></li>
+            <li><a href="https://azadnettut.github.io/#rescue" data-lang-fa="فیلترشکن" data-lang-en="VPN" data-lang-ar="VPN" data-lang-zh="VPN" data-lang-ru="VPN" data-lang-tr="VPN"><span lang="fa">فیلترشکن</span><span lang="en" style="display:none">VPN</span><span lang="ar" style="display:none">VPN</span><span lang="zh" style="display:none">VPN</span><span lang="ru" style="display:none">VPN</span><span lang="tr" style="display:none">VPN</span></a></li>
+            <li><a href="https://azadnettut.github.io/#blog" data-lang-fa="وبلاگ" data-lang-en="Blog" data-lang-ar="مدونة" data-lang-zh="博客" data-lang-ru="Блог" data-lang-tr="Blog"><span lang="fa">وبلاگ</span><span lang="en" style="display:none">Blog</span><span lang="ar" style="display:none">مدونة</span><span lang="zh" style="display:none">博客</span><span lang="ru" style="display:none">Блог</span><span lang="tr" style="display:none">Blog</span></a></li>
+            <li><a href="https://azadnettut.github.io/#technology" data-lang-fa="تکنولوژی" data-lang-en="Technology" data-lang-ar="تكنولوجيا" data-lang-zh="技术" data-lang-ru="Технологии" data-lang-tr="Teknoloji"><span lang="fa">تکنولوژی</span><span lang="en" style="display:none">Technology</span><span lang="ar" style="display:none">تكنولوجيا</span><span lang="zh" style="display:none">技术</span><span lang="ru" style="display:none">Технологии</span><span lang="tr" style="display:none">Teknoloji</span></a></li>
+            <li><a href="https://azadnettut.github.io/#about" data-lang-fa="درباره ما" data-lang-en="About Us" data-lang-ar="معلومات عنا" data-lang-zh="关于我们" data-lang-ru="О нас" data-lang-tr="Hakkımızda"><span lang="fa">درباره ما</span><span lang="en" style="display:none">About Us</span><span lang="ar" style="display:none">معلومات عنا</span><span lang="zh" style="display:none">关于我们</span><span lang="ru" style="display:none">О нас</span><span lang="tr" style="display:none">Hakkımızda</span></a></li>
+        </ul>
+        <select class="language-select" id="language-select" aria-label="انتخاب زبان">
+            <option value="fa" selected>فارسی</option>
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="zh">中文</option>
+            <option value="ru">Русский</option>
+            <option value="tr">Turkish</option>
+        </select>
+    </nav>
     <header>
-        <h1>System Optimizer</h1>
-        <p>ابزاری ساده برای بهینه‌سازی ویندوز</p>
+        <h1 data-lang-fa="System Optimizer" data-lang-en="System Optimizer" data-lang-ar="محسن النظام" data-lang-zh="系统优化器" data-lang-ru="Оптимизатор системы" data-lang-tr="Sistem Optimize Edici"><span lang="fa">System Optimizer</span><span lang="en" style="display:none">System Optimizer</span><span lang="ar" style="display:none">محسن النظام</span><span lang="zh" style="display:none">系统优化器</span><span lang="ru" style="display:none">Оптимизатор системы</span><span lang="tr" style="display:none">Sistem Optimize Edici</span></h1>
+        <p data-lang-fa="ابزاری ساده برای بهینه‌سازی ویندوز" data-lang-en="A simple tool for optimizing Windows" data-lang-ar="أداة بسيطة لتحسين ويندوز" data-lang-zh="一个简单的Windows优化工具" data-lang-ru="Простой инструмент для оптимизации Windows" data-lang-tr="Windows'u optimize etmek için basit bir araç"><span lang="fa">ابزاری ساده برای بهینه‌سازی ویندوز</span><span lang="en" style="display:none">A simple tool for optimizing Windows</span><span lang="ar" style="display:none">أداة بسيطة لتحسين ويندوز</span><span lang="zh" style="display:none">一个简单的Windows优化工具</span><span lang="ru" style="display:none">Простой инструмент для оптимизации Windows</span><span lang="tr" style="display:none">Windows'u optimize etmek için basit bir araç</span></p>
     </header>
     <main>
         <section>
-            <h2>دانلود</h2>
-            <p>فایل اجرایی را از اینجا دانلود کنید:</p>
-            <a href="https://github.com/azadnettut/system_optimizer/releases/download/V1.0.0/SystemOptimizer.bat" class="btn">دانلود System Optimizer</a>
+            <h2 data-lang-fa="دانلود" data-lang-en="Download" data-lang-ar="تحميل" data-lang-zh="下载" data-lang-ru="Скачать" data-lang-tr="İndir"><span lang="fa">دانلود</span><span lang="en" style="display:none">Download</span><span lang="ar" style="display:none">تحميل</span><span lang="zh" style="display:none">下载</span><span lang="ru" style="display:none">Скачать</span><span lang="tr" style="display:none">İndir</span></h2>
+            <p data-lang-fa="فایل اجرایی را از اینجا دانلود کنید:" data-lang-en="Download the executable file from here:" data-lang-ar="قم بتحميل الملف التنفيذي من هنا:" data-lang-zh="从这里下载可执行文件：" data-lang-ru="Скачайте исполняемый файл здесь:" data-lang-tr="Yürütülebilir dosyayı buradan indirin:"><span lang="fa">فایل اجرایی را از اینجا دانلود کنید:</span><span lang="en" style="display:none">Download the executable file from here:</span><span lang="ar" style="display:none">قم بتحميل الملف التنفيذي من هنا:</span><span lang="zh" style="display:none">从这里下载可执行文件：</span><span lang="ru" style="display:none">Скачайте исполняемый файл здесь:</span><span lang="tr" style="display:none">Yürütülebilir dosyayı buradan indirin:</span></p>
+            <a href="https://github.com/azadnettut/system_optimizer/releases/download/V1.0.0/SystemOptimizer.bat" class="btn" data-lang-fa="دانلود System Optimizer" data-lang-en="Download System Optimizer" data-lang-ar="تحميل System Optimizer" data-lang-zh="下载 System Optimizer" data-lang-ru="Скачать System Optimizer" data-lang-tr="System Optimizer İndir"><span lang="fa">دانلود System Optimizer</span><span lang="en" style="display:none">Download System Optimizer</span><span lang="ar" style="display:none">تحميل System Optimizer</span><span lang="zh" style="display:none">下载 System Optimizer</span><span lang="ru" style="display:none">Скачать System Optimizer</span><span lang="tr" style="display:none">System Optimizer İndir</span></a>
         </section>
         <section>
-            <h2>ویژگی‌ها</h2>
+            <h2 data-lang-fa="ویژگی‌ها" data-lang-en="Features" data-lang-ar="الميزات" data-lang-zh="功能" data-lang-ru="Функции" data-lang-tr="Özellikler"><span lang="fa">ویژگی‌ها</span><span lang="en" style="display:none">Features</span><span lang="ar" style="display:none">الميزات</span><span lang="zh" style="display:none">功能</span><span lang="ru" style="display:none">Функции</span><span lang="tr" style="display:none">Özellikler</span></h2>
             <ul>
-                <li>پاکسازی فایل‌های موقت</li>
-                <li>مدیریت برنامه‌های استارتاپ</li>
-                <li>دیفرگمنت دیسک</li>
-                <li>اسکن و تعمیر DLL</li>
-                <li>بهینه‌سازی افکت‌های بصری</li>
-                <li>اسکن بدافزار</li>
-                <li>پاکسازی رجیستری با بکاپ</li>
-                <li>نمایش وضعیت سیستم</li>
+                <li data-lang-fa="پاکسازی فایل‌های موقت" data-lang-en="Clean temporary files" data-lang-ar="تنظيف الملفات المؤقتة" data-lang-zh="清理临时文件" data-lang-ru="Очистка временных файлов" data-lang-tr="Geçici dosyaları temizle"><span lang="fa">پاکسازی فایل‌های موقت</span><span lang="en" style="display:none">Clean temporary files</span><span lang="ar" style="display:none">تنظيف الملفات المؤقتة</span><span lang="zh" style="display:none">清理临时文件</span><span lang="ru" style="display:none">Очистка временных файлов</span><span lang="tr" style="display:none">Geçici dosyaları temizle</span></li>
+                <li data-lang-fa="مدیریت برنامه‌های استارتاپ" data-lang-en="Manage startup programs" data-lang-ar="إدارة برامج بدء التشغيل" data-lang-zh="管理启动程序" data-lang-ru="Управление программами автозапуска" data-lang-tr="Başlangıç programlarını yönet"><span lang="fa">مدیریت برنامه‌های استارتاپ</span><span lang="en" style="display:none">Manage startup programs</span><span lang="ar" style="display:none">إدارة برامج بدء التشغيل</span><span lang="zh" style="display:none">管理启动程序</span><span lang="ru" style="display:none">Управление программами автозапуска</span><span lang="tr" style="display:none">Başlangıç programlarını yönet</span></li>
+                <li data-lang-fa="دیفرگمنت دیسک" data-lang-en="Disk defragmentation" data-lang-ar="إلغاء تجزئة القرص" data-lang-zh="磁盘碎片整理" data-lang-ru="Дефрагментация диска" data-lang-tr="Disk birleştirme"><span lang="fa">دیفرگمنت دیسک</span><span lang="en" style="display:none">Disk defragmentation</span><span lang="ar" style="display:none">إلغاء تجزئة القرص</span><span lang="zh" style="display:none">磁盘碎片整理</span><span lang="ru" style="display:none">Дефрагментация диска</span><span lang="tr" style="display:none">Disk birleştirme</span></li>
+                <li data-lang-fa="اسکن و تعمیر DLL" data-lang-en="Scan and repair DLLs" data-lang-ar="فحص وإصلاح ملفات DLL" data-lang-zh="扫描和修复DLL" data-lang-ru="Сканирование и ремонт DLL" data-lang-tr="DLL'leri tara ve onar"><span lang="fa">اسکن و تعمیر DLL</span><span lang="en" style="display:none">Scan and repair DLLs</span><span lang="ar" style="display:none">فحص وإصلاح ملفات DLL</span><span lang="zh" style="display:none">扫描和修复DLL</span><span lang="ru" style="display:none">Сканирование и ремонт DLL</span><span lang="tr" style="display:none">DLL'leri tara ve onar</span></li>
+                <li data-lang-fa="بهینه‌سازی افکت‌های بصری" data-lang-en="Optimize visual effects" data-lang-ar="تحسين التأثيرات البصرية" data-lang-zh="优化视觉效果" data-lang-ru="Оптимизация визуальных эффектов" data-lang-tr="Görsel efektleri optimize et"><span lang="fa">بهینه‌سازی افکت‌های بصری</span><span lang="en" style="display:none">Optimize visual effects</span><span lang="ar" style="display:none">تحسين التأثيرات البصرية</span><span lang="zh" style="display:none">优化视觉效果</span><span lang="ru" style="display:none">Оптимизация визуальных эффектов</span><span lang="tr" style="display:none">Görsel efektleri optimize et</span></li>
+                <li data-lang-fa="اسکن بدافزار" data-lang-en="Malware scan" data-lang-ar="فحص البرمجيات الخبيثة" data-lang-zh="恶意软件扫描" data-lang-ru="Сканирование на вредоносное ПО" data-lang-tr="Kötü amaçlı yazılım taraması"><span lang="fa">اسکن بدافزار</span><span lang="en" style="display:none">Malware scan</span><span lang="ar" style="display:none">فحص البرمجيات الخبيثة</span><span lang="zh" style="display:none">恶意软件扫描</span><span lang="ru" style="display:none">Сканирование на вредоносное ПО</span><span lang="tr" style="display:none">Kötü amaçlı yazılım taraması</span></li>
+                <li data-lang-fa="پاکسازی رجیستری با بکاپ" data-lang-en="Clean registry with backup" data-lang-ar="تنظيف السجل مع النسخ الاحتياطي" data-lang-zh="清理注册表并备份" data-lang-ru="Очистка реестра с резервной копией" data-lang-tr="Kayıt defterini yedekle ve temizle"><span lang="fa">پاکسازی رجیستری با بکاپ</span><span lang="en" style="display:none">Clean registry with backup</span><span lang="ar" style="display:none">تنظيف السجل مع النسخ الاحتياطي</span><span lang="zh" style="display:none">清理注册表并备份</span><span lang="ru" style="display:none">Очистка реестра с резервной копией</span><span lang="tr" style="display:none">Kayıt defterini yedekle ve temizle</span></li>
+                <li data-lang-fa="نمایش وضعیت سیستم" data-lang-en="Display system status" data-lang-ar="عرض حالة النظام" data-lang-zh="显示系统状态" data-lang-ru="Отображение состояния системы" data-lang-tr="Sistem durumunu göster"><span lang="fa">نمایش وضعیت سیستم</span><span lang="en" style="display:none">Display system status</span><span lang="ar" style="display:none">عرض حالة النظام</span><span lang="zh" style="display:none">显示系统状态</span><span lang="ru" style="display:none">Отображение состояния системы</span><span lang="tr" style="display:none">Sistem durumunu göster</span></li>
             </ul>
         </section>
         <section>
-            <h2>راهنما</h2>
-            <p>۱. فایل را دانلود کنید.</p>
-            <p>۲. روی آن راست‌کلیک کرده و "Run as administrator" را بزنید.</p>
-            <p>۳. از منو شماره مورد نظر را وارد کنید.</p>
+            <h2 data-lang-fa="راهنما" data-lang-en="Guide" data-lang-ar="الدليل" data-lang-zh="指南" data-lang-ru="Руководство" data-lang-tr="Rehber"><span lang="fa">راهنما</span><span lang="en" style="display:none">Guide</span><span lang="ar" style="display:none">الدليل</span><span lang="zh" style="display:none">指南</span><span lang="ru" style="display:none">Руководство</span><span lang="tr" style="display:none">Rehber</span></h2>
+            <p data-lang-fa="۱. فایل را دانلود کنید." data-lang-en="1. Download the file." data-lang-ar="١. قم بتحميل الملف." data-lang-zh="1. 下载文件。" data-lang-ru="1. Скачайте файл." data-lang-tr="1. Dosyayı indirin."><span lang="fa">۱. فایل را دانلود کنید.</span><span lang="en" style="display:none">1. Download the file.</span><span lang="ar" style="display:none">١. قم بتحميل الملف.</span><span lang="zh" style="display:none">1. 下载文件。</span><span lang="ru" style="display:none">1. Скачайте файл.</span><span lang="tr" style="display:none">1. Dosyayı indirin.</span></p>
+            <p data-lang-fa="۲. روی آن راست‌کلیک کرده و 'Run as administrator' را بزنید." data-lang-en="2. Right-click on it and select 'Run as administrator'." data-lang-ar="٢. انقر بزر الماوس الأيمن واختر 'Run as administrator'." data-lang-zh="2. 右键单击并选择“以管理员身份运行”。" data-lang-ru="2. Щелкните правой кнопкой мыши и выберите 'Запуск от имени администратора'." data-lang-tr="2. Üzerine sağ tıklayın ve 'Yönetici olarak çalıştır'ı seçin."><span lang="fa">۲. روی آن راست‌کلیک کرده و "Run as administrator" را بزنید.</span><span lang="en" style="display:none">2. Right-click on it and select "Run as administrator".</span><span lang="ar" style="display:none">٢. انقر بزر الماوس الأيمن واختر "Run as administrator".</span><span lang="zh" style="display:none">2. 右键单击并选择“以管理员身份运行”。</span><span lang="ru" style="display:none">2. Щелкните правой кнопкой мыши и выберите "Запуск от имени администратора".</span><span lang="tr" style="display:none">2. Üzerine sağ tıklayın ve "Yönetici olarak çalıştır"ı seçin.</span></p>
+            <p data-lang-fa="۳. از منو شماره مورد نظر را وارد کنید." data-lang-en="3. Enter the desired number from the menu." data-lang-ar="٣. أدخل الرقم المطلوب من القائمة." data-lang-zh="3. 从菜单中输入所需的数字。" data-lang-ru="3. Введите нужный номер из меню." data-lang-tr="3. Menüden istediğiniz numarayı girin."><span lang="fa">۳. از منو شماره مورد نظر را وارد کنید.</span><span lang="en" style="display:none">3. Enter the desired number from the menu.</span><span lang="ar" style="display:none">٣. أدخل الرقم المطلوب من القائمة.</span><span lang="zh" style="display:none">3. 从菜单中输入所需的数字。</span><span lang="ru" style="display:none">3. Введите нужный номер из меню.</span><span lang="tr" style="display:none">3. Menüden istediğiniz numarayı girin.</span></p>
         </section>
     </main>
     <footer>
-        <p>© ۱۴۰۴ System Optimizer</p>
+        <p data-lang-fa='تماس با ما: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a>' data-lang-en='Contact us: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a>' data-lang-ar='اتصل بنا: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a>' data-lang-zh='联系我们: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a>' data-lang-ru='Свяжитесь с нами: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a>' data-lang-tr='Bize ulaşın: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a>'>
+            <span lang="fa">تماس با ما: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a></span>
+            <span lang="en" style="display:none">Contact us: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a></span>
+            <span lang="ar" style="display:none">اتصل بنا: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a></span>
+            <span lang="zh" style="display:none">联系我们: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a></span>
+            <span lang="ru" style="display:none">Свяжитесь с нами: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a></span>
+            <span lang="tr" style="display:none">Bize ulaşın: <a href="https://t.me/azadnet" target="_blank">T.me/azadnet</a></span>
+        </p>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelect = document.getElementById('language-select');
+            const spans = document.querySelectorAll('span[lang]');
+            const links = document.querySelectorAll('.navbar a');
+
+            languageSelect.addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
+
+            function changeLanguage(lang) {
+                document.documentElement.lang = lang;
+                localStorage.setItem('selectedLanguage', lang);
+                updateContent();
+                updateNavMenu(lang);
+            }
+
+            function updateContent() {
+                const currentLang = document.documentElement.lang || 'fa';
+                spans.forEach(span => {
+                    span.style.display = span.lang === currentLang ? 'inline' : 'none';
+                });
+            }
+
+            function updateNavMenu(lang) {
+                links.forEach(link => {
+                    const text = link.getAttribute(`data-lang-${lang}`);
+                    if (text) link.querySelector(`span[lang="${lang}"]`).textContent = text;
+                });
+            }
+
+            function loadSavedLanguage() {
+                const savedLanguage = localStorage.getItem('selectedLanguage') || 'fa';
+                document.documentElement.lang = savedLanguage;
+                languageSelect.value = savedLanguage;
+                changeLanguage(savedLanguage);
+            }
+
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+                    e.preventDefault();
+                }
+            });
+
+            loadSavedLanguage();
+        });
+    </script>
 </body>
 </html>
